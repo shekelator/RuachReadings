@@ -1,13 +1,21 @@
 import datetime
 import requests
 import json
+import re
 
+hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>\w*) (?P<year>\d{4})$")
 class Service:
     def fromDict(self, d):
-        self.date =  datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
+        self.date = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
+        self.hebrewDate = d["hdate"]
         self.name = d["name"]["en"]
         self.isShabbat = "7" in d["fullkriyah"]
         self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
+
+        aliyahForThisYear = self.getHebrewYear() % 5780  # tell us which year of 7-year reading cycle we are in
+
+        self.torahReading = self.readings[f"{aliyahForThisYear}"]
+        self.haftarahReading = d["haftara"] if "haftara" in d else None
         return self
 
     def convertReading(self, readingData):
@@ -16,6 +24,12 @@ class Service:
         end = readingData["e"]
         return f"{book} {begin}-{end}"
 
+    def getHebrewYear(self): 
+        match = hdatePattern.match(self.hebrewDate)
+        if match is None:
+            return 0
+        else:
+            return int(match.group("year"))
 
 def getRawReadingsData():
     date = datetime.datetime.now()
@@ -32,6 +46,14 @@ def getReadings(rawItems):
     
     return shabbatServices
 
+def getReadingsForDate(rawItems, date):
+    services = list(getReadings(rawItems))
+    servicesOnDate = list(filter(lambda r: r.date == date, services))
+    if not servicesOnDate:
+        return (None, None)
+    else:
+        service = servicesOnDate[0]
+        return (service.torahReading, service.haftarahReading)
     
 
 if __name__ == "__main__":
