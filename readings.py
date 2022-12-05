@@ -9,13 +9,16 @@ class Service:
         self.date = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
         self.hebrewDate = d["hdate"]
         self.name = d["name"]["en"]
-        self.isShabbat = "7" in d["fullkriyah"]
-        self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
+        self.isShabbat = "fullkriyah" in d and "7" in d["fullkriyah"]
 
-        aliyahForThisYear = self.getHebrewYear() % 5780  # tell us which year of 7-year reading cycle we are in
+        if self.isShabbat:
+            self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
 
-        self.torahReading = self.readings[f"{aliyahForThisYear}"]
-        self.haftarahReading = d["haftara"] if "haftara" in d else None
+            aliyahForThisYear = self.getHebrewYear() % 5780  # tell us which year of 7-year reading cycle we are in
+
+            self.torahReading = self.readings[f"{aliyahForThisYear}"]
+            self.haftarahReading = d["haftara"] if "haftara" in d else None
+
         return self
 
     def convertReading(self, readingData):
