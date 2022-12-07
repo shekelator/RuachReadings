@@ -14,10 +14,11 @@ class Service:
         if self.isShabbat:
             self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
 
-            aliyahForThisYear = (self.getHebrewYear() % 5780) + 1  # tell us which year of 7-year reading cycle we are in
+            aliyahForThisYear = (self.getHebrewYear() % 5781) + 1  # tell us which year of 7-year reading cycle we are in
 
             self.torahReading = self.readings[f"{aliyahForThisYear}"]
             self.haftarahReading = d["haftara"] if "haftara" in d else None
+            self.besorahReading = ""
 
         return self
 
@@ -44,8 +45,7 @@ def getRawReadingsData():
     return rawDict["items"]
 
 def getReadings(rawItems):
-    shabbatot = filter(lambda r: 'fullkriyah' in r, rawItems)
-    shabbatServices = map(lambda i: Service().fromDict(i), shabbatot)
+    shabbatServices = filter(lambda s: s.isShabbat, map(lambda i: Service().fromDict(i), rawItems))
     
     return shabbatServices
 
