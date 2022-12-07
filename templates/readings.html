@@ -14,12 +14,12 @@
 </tr>
 {% for reading in readings %}
 <tr>
-    <td>{{ reading.date }}</td>
-    <td>{{ reading.name }}</td>
-    <td>{{ reading.torahReading }}</td>
-    <td></td>
-    <td>{{ reading.haftarahReading }}</td>
-    <td>{{ reading.besorahReading }}</td>
+    <td>{{ reading.date.strftime("%d %b %Y") }}</td>
+    <td><span class="copyable">{{ reading.name }} - {{ reading.hebrewName }}</span></td>
+    <td><span class="copyable">{{ reading.torahReading }}</td>
+    <td><span class="copyable"></span></td>
+    <td><span class="copyable">{{ reading.haftarahReading }}</span></td>
+    <td><span class="copyable">{{ reading.besorahReading }}</span></td>
 </tr>
 {% endfor %}
 

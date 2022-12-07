@@ -9,6 +9,7 @@ class Service:
         self.date = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
         self.hebrewDate = d["hdate"]
         self.name = d["name"]["en"]
+        self.hebrewName = d["name"]["he"] if "he" in d["name"] else None
         self.isShabbat = "fullkriyah" in d and "7" in d["fullkriyah"]
 
         if self.isShabbat:
