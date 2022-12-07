@@ -14,7 +14,7 @@ class Service:
         if self.isShabbat:
             self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
 
-            aliyahForThisYear = self.getHebrewYear() % 5780  # tell us which year of 7-year reading cycle we are in
+            aliyahForThisYear = (self.getHebrewYear() % 5780) + 1  # tell us which year of 7-year reading cycle we are in
 
             self.torahReading = self.readings[f"{aliyahForThisYear}"]
             self.haftarahReading = d["haftara"] if "haftara" in d else None
@@ -41,7 +41,7 @@ def getRawReadingsData():
     url = f"https://www.hebcal.com/leyning?cfg=json&start={date.strftime('%Y-%m-01')}&end={endDate.strftime('%Y-%m-%d')}"
     data = requests.get(url)
     rawDict = json.loads(data.text)
-    return data["items"]
+    return rawDict["items"]
 
 def getReadings(rawItems):
     shabbatot = filter(lambda r: 'fullkriyah' in r, rawItems)
