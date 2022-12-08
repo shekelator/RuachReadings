@@ -10,9 +10,6 @@ def hebCalData():
 
 class TestReadings:
 
-    def test_can_run(self):
-        assert 1 == 1
-
     def test_can_read_items(self, hebCalData):
         assert len(hebCalData) > 1
 

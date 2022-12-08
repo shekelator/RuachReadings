@@ -2,6 +2,7 @@ import datetime
 import requests
 import json
 import re
+import besorot
 
 hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>\w*) (?P<year>\d{4})$")
 class Service:
@@ -19,7 +20,7 @@ class Service:
 
             self.torahReading = self.readings[f"{aliyahForThisYear}"]
             self.haftarahReading = d["haftara"] if "haftara" in d else None
-            self.besorahReading = ""
+            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear())
 
         return self
 
@@ -62,5 +63,4 @@ def getReadingsForDate(rawItems, date):
 
 if __name__ == "__main__":
     import sys
-    # fib(int(sys.argv[1]))
     print(f"Url is {getReadings()}")

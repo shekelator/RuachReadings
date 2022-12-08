@@ -15,7 +15,7 @@
 {% for reading in readings %}
 <tr>
     <td>{{ reading.date.strftime("%d %b %Y") }}</td>
-    <td><span class="copyable">{{ reading.name }} - {{ reading.hebrewName }}</span></td>
+    <td><span class="copyable">{{ reading.name }}<br/>{{ reading.hebrewName }}</span></td>
     <td><span class="copyable">{{ reading.torahReading }}</td>
     <td><span class="copyable"></span></td>
     <td><span class="copyable">{{ reading.haftarahReading }}</span></td>
