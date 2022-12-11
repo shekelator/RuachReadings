@@ -64,9 +64,16 @@ parshiot = {
     # TODO holidays
 }
 
-def getReadings(parasha, year):
-    besorahYear = getYear(year)
+def getReadings(parasha, hebrewYear, date):
+    besorahYear = getYear(hebrewYear)
+
+    if isLastShabbatBeforeChristmas(date):
+        return readingsToFn(("Philippians 2:5-11", "Colossians 1:15-20", "1 John 1:1-4"))(besorahYear)
+
     return parshiot[parasha](besorahYear) if parasha in parshiot else None
+
+def isLastShabbatBeforeChristmas(date):
+    return date.month == 12 and date.day <= 25 and date.day >= 19
 
 def getYear(year):
     key = {

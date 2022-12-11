@@ -20,7 +20,7 @@ class Service:
 
             self.torahReading = self.readings[f"{aliyahForThisYear}"]
             self.haftarahReading = d["haftara"] if "haftara" in d else None
-            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear())
+            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date)
 
         return self
 
