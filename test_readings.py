@@ -22,6 +22,7 @@ class TestReadings:
     def test_can_get_services(self, hebCalData):
         services = list(readings.getReadings(hebCalData))
         assert services[0].name == "Lech-Lecha"
+        assert services[0].additionalDescription == None
         assert services[0].date == datetime.date(2022, 11, 5)
         assert services[0].isShabbat == True
         assert services[0].torahReading == "Genesis 13:5-13:18"
@@ -32,13 +33,16 @@ class TestReadings:
         (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2022, 12, 3))
         assert torah == "Genesis 29:18-30:13"
         assert haftarah == "Hosea 12:13-14:10"
-        assert maftir == ""
+        assert maftir == None
 
     def test_includes_maftir(self, hebCalData):
         services = list(readings.getReadings(hebCalData))
         (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2022, 12, 24))
         assert maftir == "Numbers 7:42-7:47"
 
+    def test_includes_maftir_reason(self, hebCalData):
+        services = list(filter(lambda s: s.date == datetime.date(2022, 12, 24), readings.getReadings(hebCalData)))[0]
+        assert services.additionalDescription == "Shabbat Rosh Chodesh Chanukah"
 
     def test_can_get_hebrew_year(self, hebCalData):
         data = [{

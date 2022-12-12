@@ -81,8 +81,9 @@ def getReadings(parasha, hebrewYear, date):
 def isLastShabbatBeforeChristmas(date):
     return date.month == 12 and date.day <= 25 and date.day >= 19
 
+# TODO this needs to be more robust
 def matotMaseiAreSeparate(hebrewYear):
-    return False
+    return hebrewYear in (5795, 5798)
 
 def getYear(year):
     key = {

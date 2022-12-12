@@ -2,7 +2,6 @@
 
 {% block content %}
 
-<h1>Ruach Israel Readings</h1>
 <div class="alert alert-warning">
     <strong class="text-small">Warning!</strong> This is a work in progress. Holidays and other special readings are not yet implemented. Please inform us of any inaccuracies you come across.
 </div>
@@ -20,9 +19,15 @@
 {% for reading in readings %}
 <tr>
     <td>{{ reading.date.strftime("%d %b %Y") }}</td>
-    <td><span class="copyable">{{ reading.name }}<br/>{{ reading.hebrewName }}</span></td>
+    <td>
+        <span class="copyable">{{ reading.name }}</span><br/>
+        <span class="copyable">{{ reading.hebrewName }}</span><br/>
+        {% if reading.additionalDescription %}
+            <span class="copyable"><small>({{ reading.additionalDescription }})</small></span>
+        {% endif %}
+    </td>
     <td><span class="copyable">{{ reading.torahReading }}</td>
-    <td><span class="copyable">{{ reading.maftirReading }}</span></td>
+    <td><span class="copyable">{{ reading.maftirReading or "" }}</span></td>
     <td><span class="copyable">{{ reading.haftarahReading }}</span></td>
     <td><span class="copyable">{{ reading.besorahReading or "" }}</span></td>
 </tr>

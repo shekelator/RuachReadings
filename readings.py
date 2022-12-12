@@ -12,7 +12,8 @@ class Service:
         self.name = d["name"]["en"]
         self.hebrewName = d["name"]["he"] if "he" in d["name"] else None
         self.isShabbat = "fullkriyah" in d and "7" in d["fullkriyah"]
-        self.maftirReading = ""
+        self.maftirReading = None
+        self.additionalDescription = None
 
         if self.isShabbat:
             self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
@@ -21,13 +22,16 @@ class Service:
 
             self.torahReading = self.readings[f"{aliyahForThisYear}"]
             self.haftarahReading = d["haftara"] if "haftara" in d else None
+            if "haftara" in d and "reason" in d["haftara"]:
+                self.additionalDescription = d["haftara"]["reason"]
+
             self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date)
 
             if "M" in d["fullkriyah"] and "reason" in d["fullkriyah"]["M"]:
                 maftir = d["fullkriyah"]["M"]
                 self.maftirReading = self.convertReading(maftir)
                 if "reason" in maftir:
-                    self.name = f"{self.name} {maftir['reason']}" 
+                    self.additionalDescription = maftir["reason"]
 
         return self
 
