@@ -33,3 +33,11 @@ class TestBesorot:
         assert getReadings("Vayigash", 5784, datetime.date(2023, 12, 24)) == "Colossians 1:15-20"
         assert getReadings("Vayeshev", 5785, datetime.date(2024, 12, 24)) == "1 John 1:1-4"
         assert getReadings("Miketz", 5786, datetime.date(2025, 12, 24)) == "Philippians 2:5-11"
+
+    def test_most_years_matotmasei_are_combined(self):
+        assert getReadings("Balak", 5783, datetime.date(2022, 7, 8)) == "Mark 15:1-15"
+        assert getReadings("Pinchas", 5784, datetime.date(2023, 7, 27)) == "Luke 23:26-32"
+
+    def test_years_matotmasei_are_separate(self):
+        assert getReadings("Balak", 5795, datetime.date(2035, 7, 14)) == "Mark 15:1-15"
+        assert getReadings("Pinchas", 5795, datetime.date(2035, 7, 21)) == "Luke 22:7-20"

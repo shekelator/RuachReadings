@@ -12,6 +12,7 @@ class Service:
         self.name = d["name"]["en"]
         self.hebrewName = d["name"]["he"] if "he" in d["name"] else None
         self.isShabbat = "fullkriyah" in d and "7" in d["fullkriyah"]
+        self.maftirReading = ""
 
         if self.isShabbat:
             self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
@@ -21,6 +22,12 @@ class Service:
             self.torahReading = self.readings[f"{aliyahForThisYear}"]
             self.haftarahReading = d["haftara"] if "haftara" in d else None
             self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date)
+
+            if "M" in d["fullkriyah"] and "reason" in d["fullkriyah"]["M"]:
+                maftir = d["fullkriyah"]["M"]
+                self.maftirReading = self.convertReading(maftir)
+                if "reason" in maftir:
+                    self.name = f"{self.name} {maftir['reason']}" 
 
         return self
 
@@ -40,8 +47,7 @@ class Service:
 def getRawReadingsData():
     date = datetime.datetime.now()
     endDate = date + datetime.timedelta(days=180)
-    date.strftime("%d-%m-%Y")
-    url = f"https://www.hebcal.com/leyning?cfg=json&start={date.strftime('%Y-%m-01')}&end={endDate.strftime('%Y-%m-%d')}"
+    url = f"https://www.hebcal.com/leyning?cfg=json&triennial=off&start={date.strftime('%Y-%m-01')}&end={endDate.strftime('%Y-%m-%d')}"
     data = requests.get(url)
     rawDict = json.loads(data.text)
     return rawDict["items"]
@@ -55,10 +61,10 @@ def getReadingsForDate(rawItems, date):
     services = list(getReadings(rawItems))
     servicesOnDate = list(filter(lambda r: r.date == date, services))
     if not servicesOnDate:
-        return (None, None)
+        return (None, None, None)
     else:
         service = servicesOnDate[0]
-        return (service.torahReading, service.haftarahReading)
+        return (service.torahReading, service.haftarahReading, service.maftirReading)
     
 
 if __name__ == "__main__":

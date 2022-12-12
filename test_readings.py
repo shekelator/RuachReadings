@@ -29,9 +29,16 @@ class TestReadings:
 
     def test_can_get_torah_and_haft_for_date(self, hebCalData):
         services = list(readings.getReadings(hebCalData))
-        (torah, haftarah) = readings.getReadingsForDate(hebCalData, datetime.date(2022, 12, 3))
+        (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2022, 12, 3))
         assert torah == "Genesis 29:18-30:13"
         assert haftarah == "Hosea 12:13-14:10"
+        assert maftir == ""
+
+    def test_includes_maftir(self, hebCalData):
+        services = list(readings.getReadings(hebCalData))
+        (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2022, 12, 24))
+        assert maftir == "Numbers 7:42-7:47"
+
 
     def test_can_get_hebrew_year(self, hebCalData):
         data = [{

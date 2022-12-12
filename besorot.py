@@ -43,10 +43,10 @@ parshiot = {
     "Beha'alotcha": readingsToFn(("Mark 14:1-11", "Luke 18:31-43", "John 13:1-20")),
     "Sh'lach": readingsToFn(("Matthew 26:17-30", "Luke 19:1-28", "John 14:1-24")),
     "Korach": readingsToFn(("Mark 14:32-50", "Luke 19:29-48", "John 15:1-17")),
-    "Chukat": readingsToFn(("", "", "")),  # TODO figure out how to determine if matt-masei are combined
-    "Balak": readingsToFn(("", "", "")),
+    "Chukat": readingsToFn(("Mark 14:53-65", "Luke 20:1-8", "John 16:12-28")),
+    "Balak": readingsToFn(("Mark 15:1-15", "Luke 22:7-20", "John 17:1-26")),  # TODO figure out how to determine if matt-masei are combined
     "Chukat-Balak": readingsToFn(("Mark 14:53-72", "Luke 20:1-18", "")),
-    "Pinchas": readingsToFn(("", "", "")),
+    "Pinchas": readingsToFn(("Matthew 27:27-32", "Luke 23:26-32", "John 18:1-27")),  # TODO figure out how to determine if matt-masei are combined
     "Matot": readingsToFn(("Matthew 27:27-32", "Luke 23:26-32", "John 18:1-27")),
     "Masei": readingsToFn(("Matthew 27:33-44", "Luke 23:33-43", "John 18:28-19:16")),
     "Matot-Masei": readingsToFn(("Matthew 27:33-44", "Luke 23:33-43", "John 18:28-19:16")),
@@ -70,10 +70,19 @@ def getReadings(parasha, hebrewYear, date):
     if isLastShabbatBeforeChristmas(date):
         return readingsToFn(("Philippians 2:5-11", "Colossians 1:15-20", "1 John 1:1-4"))(besorahYear)
 
+    if matotMaseiAreSeparate(hebrewYear) and parasha in ("Balak", "Pinchas"):
+        if parasha == "Balak":
+            return readingsToFn(("Mark 14:66-72", "Luke 20:9-18", "John 16:29-33"))(besorahYear)
+        if parasha == "Pinchas":
+            return readingsToFn(("Mark 15:1-15", "Luke 22:7-20", "John 17:1-26"))(besorahYear)
+
     return parshiot[parasha](besorahYear) if parasha in parshiot else None
 
 def isLastShabbatBeforeChristmas(date):
     return date.month == 12 and date.day <= 25 and date.day >= 19
+
+def matotMaseiAreSeparate(hebrewYear):
+    return False
 
 def getYear(year):
     key = {
