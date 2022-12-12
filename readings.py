@@ -44,8 +44,16 @@ class Service:
         else:
             return int(match.group("year"))
 
-def getRawReadingsData():
-    date = datetime.datetime.now()
+def parseDate(dateString):
+    if dateString is None:
+        return datetime.datetime.now().date()
+    try:
+        return datetime.datetime.strptime(dateString, "%Y-%m-%d").date()
+    except ValueError:
+        return datetime.datetime.now().date()
+
+def getRawReadingsData(startDate = None):
+    date = parseDate(startDate)
     endDate = date + datetime.timedelta(days=180)
     url = f"https://www.hebcal.com/leyning?cfg=json&triennial=off&start={date.strftime('%Y-%m-01')}&end={endDate.strftime('%Y-%m-%d')}"
     data = requests.get(url)
