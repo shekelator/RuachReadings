@@ -59,7 +59,7 @@ def parseDate(dateString):
 def getRawReadingsData(startDate = None):
     date = parseDate(startDate)
     endDate = date + datetime.timedelta(days=180)
-    url = f"https://www.hebcal.com/leyning?cfg=json&triennial=off&start={date.strftime('%Y-%m-01')}&end={endDate.strftime('%Y-%m-%d')}"
+    url = f"https://www.hebcal.com/leyning?cfg=json&triennial=off&start={date.strftime('%Y-%m-%d')}&end={endDate.strftime('%Y-%m-%d')}"
     data = requests.get(url)
     rawDict = json.loads(data.text)
     return rawDict["items"]

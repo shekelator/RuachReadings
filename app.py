@@ -10,8 +10,9 @@ app = Flask(__name__)
 def index():
     start_date = request.args.get('start_date')
     rawReadingsData = readings.getRawReadingsData(start_date)
-    services = readings.getReadings(rawReadingsData)
-    return render_template('readings.html', readings=services)
+    services = list(readings.getReadings(rawReadingsData))
+    last_date = services[-1].date
+    return render_template('readings.html', readings=services, last_date=last_date)
 
 @app.route('/about/')
 def about():
