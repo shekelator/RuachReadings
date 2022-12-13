@@ -13,4 +13,6 @@ def index():
     services = readings.getReadings(rawReadingsData)
     return render_template('readings.html', readings=services)
 
-
+@app.route('/about/')
+def about():
+    return render_template('about.html')
