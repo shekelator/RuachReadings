@@ -1,5 +1,17 @@
 {% extends 'base.html' %}
 
+{% macro copyableReading(text, besorah) -%}
+    <div class="copyable">{{ text }}
+        {% if text %}
+        <br/>
+        <div class="action-buttons">
+            <i class="bi bi-box-arrow-in-up-right read-button {% if besorah %}besorah{% endif %}"></i>
+            <i class="bi bi-clipboard copy-button"></i>
+        </div>
+        {% endif %}
+    </div>
+{%- endmacro %}
+
 {% block content %}
 
 <div class="container">
@@ -7,10 +19,9 @@
         <strong class="text-small">Warning!</strong> This is a work in progress. Holidays and other special readings are not yet implemented. Please inform us of any inaccuracies you come across.
     </div>
     <h1>Weekly Readings</h1>
-    <p><em>Click on any text element to copy it to the clipboard</em></p>
-    <table class="table">
+    <table class="table readings">
     <tr>
-        <th>Date</th>
+        <th>Date</i></th>
         <th>Parasha</th>
         <th>Torah Reading</th>
         <th>Maftir</th>
@@ -27,10 +38,10 @@
                 <span class="copyable"><small>({{ reading.additionalDescription }})</small></span>
             {% endif %}
         </td>
-        <td><span class="copyable">{{ reading.torahReading }}</td>
-        <td><span class="copyable">{{ reading.maftirReading or "" }}</span></td>
-        <td><span class="copyable">{{ reading.haftarahReading }}</span></td>
-        <td><span class="copyable">{{ reading.besorahReading or "" }}</span></td>
+        <td>{{ copyableReading(reading.torahReading) }}</td>
+        <td>{{ copyableReading(reading.maftirReading or "") }}</td>
+        <td>{{ copyableReading(reading.haftarahReading) }}</td>
+        <td>{{ copyableReading(reading.besorahReading or "", true) }}</td>
     </tr>
     {% endfor %}
 
