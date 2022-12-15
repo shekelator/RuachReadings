@@ -5,6 +5,7 @@ import re
 import besorot
 
 hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>\w*) (?P<year>\d{4})$")
+holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana")
 class Service:
     def fromDict(self, d):
         self.date = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
@@ -15,22 +16,27 @@ class Service:
         self.maftirReading = None
         self.additionalDescription = None
 
-        if self.isShabbat:
-            self.readings = {k: self.convertReading(v) for k, v in d["fullkriyah"].items()}
-
+        if "fullkriyah" in d:
+            fullkriyah = d["fullkriyah"]
+            maftir = None
+            self.isHoliday = bool("M" in fullkriyah and holidayNamesPattern.search(self.name))
+        
             aliyahForThisYear = (self.getHebrewYear() % 5781) + 1  # tell us which year of 7-year reading cycle we are in
-
-            self.torahReading = self.readings[f"{aliyahForThisYear}"]
+            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date)
             self.haftarahReading = d["haftara"] if "haftara" in d else None
+            if "M" in fullkriyah and (self.isHoliday or "reason" in fullkriyah["M"]):
+                maftir = fullkriyah["M"]
+                self.maftirReading = self.convertReading(maftir)
+
             if "haftara" in d and "reason" in d["haftara"]:
                 self.additionalDescription = d["haftara"]["reason"]
 
-            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date)
+            if self.isShabbat:
+                self.readings = {k: self.convertReading(v) for k, v in fullkriyah.items()}
 
-            if "M" in d["fullkriyah"] and "reason" in d["fullkriyah"]["M"]:
-                maftir = d["fullkriyah"]["M"]
-                self.maftirReading = self.convertReading(maftir)
-                if "reason" in maftir:
+                self.torahReading = self.readings[f"{aliyahForThisYear}"]
+
+                if maftir and "reason" in maftir:
                     self.additionalDescription = maftir["reason"]
 
         return self

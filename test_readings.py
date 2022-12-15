@@ -74,3 +74,9 @@ class TestReadings:
         assert services[1].getHebrewYear() == 5782
         assert services[0].getHebrewYear() == 5783
 
+
+    def test_shabbat_chol_hamoed_sukkot(self, hebCalData):
+        (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2024, 10, 19))
+        assert torah == "Exodus 34:4-34:10"
+        assert maftir == "Numbers 29:17-29:22"
+        assert haftarah == "Ezekiel 38:18-39:16"
