@@ -80,3 +80,39 @@ class TestReadings:
         assert torah == "Exodus 34:4-34:10"
         assert maftir == "Numbers 29:17-29:22"
         assert haftarah == "Ezekiel 38:18-39:16"
+
+    def test_marks_holidays_correctly(self, hebCalData):
+        holidayDates = [datetime.date(2023, 4, 6), datetime.date(2023, 4, 7)]
+        allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
+        for date in holidayDates:
+            assert allServicesByDate[date].isHoliday == True
+
+        nonHolidayDates = [datetime.date(2023, 4, 8), datetime.date(2024, 9, 7)]
+        for date in nonHolidayDates:
+            assert allServicesByDate[date].isHoliday == False
+
+    def test_gets_maftir_for_chol_hamoed(self, hebCalData):
+        (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2023, 4, 6))
+        assert maftir == "Numbers 28:16-28:25"
+
+    def test_holidays_have_readings(self, hebCalData):
+        holidayDates = [datetime.date(2023, 4, 6)]  # todo add shavuot, sukkot, HH, etc.
+        allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
+        for date in holidayDates:
+            assert allServicesByDate[date].torahReading != None
+            assert allServicesByDate[date].haftarahReading != None
+            assert allServicesByDate[date].maftirReading != None
+            assert allServicesByDate[date].besorahReading != None
+
+    def test_gets_holiday_besorah_for_holidays(self, hebCalData):
+        holidayDates = [
+            (datetime.date(2023, 4, 6), "1 Corinthians 11:23-26"),
+            (datetime.date(2025, 3, 1), "Mark 12:41-44"),  # Shabbat shekalim
+            (datetime.date(2024, 10, 3), "Romans 8:31-39"),  # Rosh Hashana I
+            (datetime.date(2024, 10, 4), "1 Thessalonians 4:13-18 "),  # Rosh Hashana II
+            # TODO
+
+        ]
+        allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
+        for date, besorah in holidayDates:
+            assert allServicesByDate[date].besorahReading == besorah

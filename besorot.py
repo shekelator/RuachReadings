@@ -62,9 +62,15 @@ parshiot = {
     "Ha'Azinu": singleReadingToFn("Romans 15:7-13"),
     # "Vezot Haberakhah": readingsToFn(("", "", "")),
     # TODO holidays
+    "Pesach I": singleReadingToFn("1 Corinthians 11:23-26"),
+    "Pesach VII": singleReadingToFn("1 Corinthians 10:1-11"),
+    "Pesach Shabbat Chol ha-Moed": singleReadingToFn("Revelation 5:1-14"),
+    "Shavuot I": singleReadingToFn("Acts 2:1-21"),
+    "Shavuot II": singleReadingToFn("John 15:26-27; 16:12-15"),
 }
 
 def getReadings(parasha, hebrewYear, date):
+    parasha = parasha.replace(" (on Shabbat)", "")
     besorahYear = getYear(hebrewYear)
 
     if isLastShabbatBeforeChristmas(date):
