@@ -12,7 +12,7 @@ class Service:
     def fromDict(self, d):
         self.date = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
         self.hebrewDate = d["hdate"]
-        self.name = d["name"]["en"]
+        self.name = d["name"]["en"].replace(" (on Shabbat)", "")
         self.hebrewName = d["name"]["he"] if "he" in d["name"] else None
         self.isShabbat = "fullkriyah" in d and "7" in d["fullkriyah"]
         self.torahReading = None
@@ -24,10 +24,11 @@ class Service:
 
         if "fullkriyah" in d:
             fullkriyah = d["fullkriyah"]
+            allTorahReadings = {k: self.convertReading(v) for k, v in fullkriyah.items()}
             maftir = None
             self.isHoliday = bool("M" in fullkriyah and self.isHolidayByName())
         
-            aliyahForThisYear = (self.getHebrewYear() % 5781) + 1  # tell us which year of 7-year reading cycle we are in
+            aliyahForThisYear = ((self.getHebrewYear() - 5781) % 7) + 1  # tell us which year of 7-year reading cycle we are in
             self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date)
             self.haftarahReading = d["haftara"] if "haftara" in d else None
             if "M" in fullkriyah and (self.isHoliday or self.isCholHaMoed() or "reason" in fullkriyah["M"]):
@@ -38,20 +39,16 @@ class Service:
                 self.additionalDescription = d["haftara"]["reason"]
 
             if self.isShabbat:
-                self.readings = {k: self.convertReading(v) for k, v in fullkriyah.items()}
 
-                self.torahReading = self.readings[f"{aliyahForThisYear}"]
+                self.torahReading = allTorahReadings[f"{aliyahForThisYear}"]
 
                 if maftir and "reason" in maftir:
                     self.additionalDescription = maftir["reason"]
 
             if self.isHoliday:
+                # holidays don't typically have 7 aliyot, so just show the whole reading from the summaryParts property
                 if "summaryParts" in d:
                     self.torahReading = self.convertReading(d["summaryParts"][0]).split(";")[0]
-                elif "7" in fullkriyah:
-                    self.readings = {k: self.convertReading(v) for k, v in fullkriyah.items() if k != "M"}
-                else:
-                    self.torahReading = self.readings[f"{aliyahForThisYear}"]
 
         return self
 
