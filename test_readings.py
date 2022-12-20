@@ -141,12 +141,29 @@ class TestReadings:
     def test_gets_holiday_besorah_for_holidays(self, hebCalData):
         holidayDates = [
             (datetime.date(2023, 4, 6), "1 Corinthians 11:23-26"),
-            # (datetime.date(2025, 3, 1), "Mark 12:41-44"),  # Shabbat shekalim
-            # (datetime.date(2024, 10, 3), "Romans 8:31-39"),  # Rosh Hashana I
-            # (datetime.date(2024, 10, 4), "1 Thessalonians 4:13-18 "),  # Rosh Hashana II
-            # TODO
+            (datetime.date(2023, 4, 8), "Revelation 5:1-14"), # Pesach Shabbat Chol ha-Moed
+            (datetime.date(2025, 3, 1), "Mark 12:41-44"),  # Shabbat shekalim
+            (datetime.date(2024, 10, 3), "Romans 8:31-39"),  # Rosh Hashana I
+            (datetime.date(2024, 10, 4), "1 Thessalonians 4:13-18"),  # Rosh Hashana II
+            (datetime.date(2024, 10, 3), "Romans 8:31-39"),  # Rosh Hashana I
+            (datetime.date(2024, 10, 5), "Luke 15:11-32"),  # Shabbat Shuva
+            (datetime.date(2024, 10, 12), "Hebrews 9:1-14"),  # Yom Kippur
+            (datetime.date(2025, 3, 8), "Revelation 6:9-7:8"),  # Shabbat Zachor
+            (datetime.date(2025, 3, 22), "Hebrews 9:11-14"),  # Shabbat Parah
+            (datetime.date(2025, 3, 29), "1 Corinthians 5:6-8"),  # Shabbat HaChodesh
+            (datetime.date(2025, 4, 12), "Luke 1:5-22"),  # Shabbat HaGadol
+            (datetime.date(2025, 4, 13), "1 Corinthians 11:23-26"),  # Pesach I
+            (datetime.date(2025, 4, 19), "1 Corinthians 10:1-11"),  # Pesach VII
+
+            # TODO might need a test for two Shabbat chol ha-moeds during pesach
 
         ]
         allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
         for date, besorah in holidayDates:
             assert allServicesByDate[date].besorahReading == besorah
+
+
+
+## cases remaining to cover:
+# * Festivals (e.g. chanukah) + rosh chodesh (multiple maftir readings)
+# * Special shabbats (e.g. shekalim) on rosh chodesh (multiple maftir readings)

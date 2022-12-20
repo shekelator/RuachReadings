@@ -46,7 +46,7 @@ class TestBesorot:
 
     def test_can_get_holiday_readings(self, calendarDate):
         assert getReadings("Pesach I", 5783, datetime.date(2022, 4, 6)) == "1 Corinthians 11:23-26"
-        # assert getReadings("Shavuot II (on Shabbat)", 5783, datetime.date(2022, 5, 16)) == "John 7:37-39"
-        # assert getReadings("Shavuot", 5784, datetime.date(2023, 5, 6)) == "John 15:26-27; 16:12-15"
-        # assert getReadings("Shavuot", 5785, datetime.date(2024, 5, 26)) == "John 7:37-39"
-        # assert getReadings("Shavuot", 5786, datetime.date(2025, 5, 16)) == "John 7:37-39"
+        assert getReadings("Shavuot II (on Shabbat)", 5783, datetime.date(2022, 5, 16)) == "John 15:26-27; 16:12-15"
+        assert getReadings("Shavuot II", 5784, datetime.date(2024, 6, 13)) == "John 15:26-27; 16:12-15"
+        assert getReadings("Shavuot I", 5785, datetime.date(2025, 6, 12)) == "Acts 2:1-21"
+        assert getReadings("Shavuot I", 5786, datetime.date(2026, 5, 22)) == "Acts 2:1-21"

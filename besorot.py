@@ -67,9 +67,19 @@ parshiot = {
     "Pesach Shabbat Chol ha-Moed": singleReadingToFn("Revelation 5:1-14"),
     "Shavuot I": singleReadingToFn("Acts 2:1-21"),
     "Shavuot II": singleReadingToFn("John 15:26-27; 16:12-15"),
+    "Shabbat Shekalim": singleReadingToFn("Mark 12:41-44"),
+    "Rosh Hashana I": singleReadingToFn("Romans 8:31-39"),
+    "Rosh Hashana II": singleReadingToFn("1 Thessalonians 4:13-18"),
+    "Shabbat Shuva": singleReadingToFn("Luke 15:11-32"),
+    "Yom Kippur": singleReadingToFn("Hebrews 9:1-14"),
+    "Shabbat Zachor": singleReadingToFn("Revelation 6:9-7:8"),
+    "Shabbat Parah": singleReadingToFn("Hebrews 9:11-14"),
+    "Shabbat HaChodesh": singleReadingToFn("1 Corinthians 5:6-8"),
+    "Shabbat HaGadol": singleReadingToFn("Luke 1:5-22"),
+    # "": singleReadingToFn(""),
 }
 
-def getReadings(parasha, hebrewYear, date):
+def getReadings(parasha, hebrewYear, date, description = None):
     parasha = parasha.replace(" (on Shabbat)", "")
     besorahYear = getYear(hebrewYear)
 
@@ -82,6 +92,10 @@ def getReadings(parasha, hebrewYear, date):
         if parasha == "Pinchas":
             return readingsToFn(("Mark 15:1-15", "Luke 22:7-20", "John 17:1-26"))(besorahYear)
 
+    specialShabbat = getSpecialShabbat(description)
+    if specialShabbat:
+        return parshiot[specialShabbat](besorahYear)
+
     return parshiot[parasha](besorahYear) if parasha in parshiot else None
 
 def isLastShabbatBeforeChristmas(date):
@@ -90,6 +104,14 @@ def isLastShabbatBeforeChristmas(date):
 # TODO this needs to be more robust
 def matotMaseiAreSeparate(hebrewYear):
     return hebrewYear in (5795, 5798)
+
+def getSpecialShabbat(description):
+    specialShabbatotAndNames = [
+        "Shabbat Shekalim", "Shabbat Shuva", "Shabbat Zachor", "Shabbat Parah", "Shabbat HaChodesh", "Shabbat HaGadol"
+    ]
+    for specialShabbat in specialShabbatotAndNames:
+        if description and specialShabbat in description:
+            return specialShabbat
 
 def getYear(year):
     key = {

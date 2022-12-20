@@ -4,11 +4,12 @@ import json
 import re
 import besorot
 
-hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>\w*) (?P<year>\d{4})$")
-holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana")
-cholHaMoedPattern = re.compile(r"Chol ha-Moed")
 
 class Service:
+    hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>\w*) (?P<year>\d{4})$")
+    holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana")
+    cholHaMoedPattern = re.compile(r"Chol ha-Moed")
+
     def fromDict(self, d):
         self.date = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
         self.hebrewDate = d["hdate"]
@@ -29,26 +30,28 @@ class Service:
             self.isHoliday = bool("M" in fullkriyah and self.isHolidayByName())
         
             aliyahForThisYear = ((self.getHebrewYear() - 5781) % 7) + 1  # tell us which year of 7-year reading cycle we are in
-            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date)
-            self.haftarahReading = d["haftara"] if "haftara" in d else None
-            if "M" in fullkriyah and (self.isHoliday or self.isCholHaMoed() or "reason" in fullkriyah["M"]):
-                maftir = fullkriyah["M"]
-                self.maftirReading = self.convertReading(maftir)
-
-            if "haftara" in d and "reason" in d["haftara"]:
-                self.additionalDescription = d["haftara"]["reason"]
 
             if self.isShabbat:
-
                 self.torahReading = allTorahReadings[f"{aliyahForThisYear}"]
-
-                if maftir and "reason" in maftir:
-                    self.additionalDescription = maftir["reason"]
 
             if self.isHoliday:
                 # holidays don't typically have 7 aliyot, so just show the whole reading from the summaryParts property
                 if "summaryParts" in d:
                     self.torahReading = self.convertReading(d["summaryParts"][0]).split(";")[0]
+
+            self.haftarahReading = d["haftara"] if "haftara" in d else None
+
+            if "M" in fullkriyah and (self.isHoliday or self.isCholHaMoed() or "reason" in fullkriyah["M"]):
+                maftir = fullkriyah["M"]
+                self.maftirReading = self.convertReading(maftir)
+
+            if "reason" in d:
+                if "haftara" in d["reason"]:
+                    self.additionalDescription = d["reason"]["haftara"]
+                elif "M" in d["reason"]:
+                    self.additionalDescription = d["reason"]["M"]
+
+            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date, self.additionalDescription)
 
         return self
 
@@ -59,13 +62,13 @@ class Service:
         return f"{book} {begin}-{end}"
 
     def isCholHaMoed(self):
-        return bool(cholHaMoedPattern.search(self.name))
+        return bool(self.cholHaMoedPattern.search(self.name))
 
     def isHolidayByName(self):
-        return bool(holidayNamesPattern.search(self.name) and not self.isCholHaMoed())
+        return bool(self.holidayNamesPattern.search(self.name) and not self.isCholHaMoed())
 
     def getHebrewYear(self): 
-        match = hdatePattern.match(self.hebrewDate)
+        match = self.hdatePattern.match(self.hebrewDate)
         if match is None:
             return 0
         else:
