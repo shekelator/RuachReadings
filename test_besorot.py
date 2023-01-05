@@ -16,6 +16,7 @@ class TestBesorot:
 
     def test_can_get_for_parasha(self, calendarDate):
         assert getReadings("Bereshit", 5783, calendarDate) == "John 1:1-18"
+        assert getReadings("Beshalach", 5783, calendarDate) == "Mark 2:1-12"
 
     def test_can_get_reading_by_year(self, calendarDate):
         assert getReadings("Lech-Lecha", 5783, calendarDate) == "Matthew 1:18-25"

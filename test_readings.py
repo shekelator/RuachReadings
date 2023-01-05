@@ -10,14 +10,48 @@ def hebCalData():
 
 class TestReadings:
 
-    def test_can_read_items(self, hebCalData):
-        assert len(hebCalData) > 1
-
     def test_can_create_service(self, hebCalData):
         services = list(map(lambda x: readings.Service().fromDict(x), hebCalData))
         assert services[0].date == datetime.date(2022, 11, 3)
         assert services[1].date == datetime.date(2022, 11, 5)
         assert services[1].name == "Lech-Lecha"
+
+    def test_gets_beshalach_right(self, hebCalData):
+        data = [{
+            "date": "2023-02-04",
+            "hdate": "13 Sh'vat 5783",
+            "name": {
+                "en": "Beshalach",
+                "he": "בְּשַׁלַּח"
+            },
+            "parshaNum": 16,
+            "summary": "Exodus 13:17-17:16",
+            "fullkriyah": {
+                "1": { "k": "Exodus", "b": "13:17", "e": "14:8", "v": 14 },
+                "2": { "k": "Exodus", "b": "14:9", "e": "14:14", "v": 6 },
+                "3": { "k": "Exodus", "b": "14:15", "e": "14:25", "v": 11 },
+                "4": { "k": "Exodus", "b": "14:26", "e": "15:26", "v": 32 },
+                "5": { "k": "Exodus", "b": "15:27", "e": "16:10", "v": 11 },
+                "6": { "k": "Exodus", "b": "16:11", "e": "16:36", "v": 26 },
+                "7": { "k": "Exodus", "b": "17:1", "e": "17:16", "v": 16 },
+                "M": { "k": "Exodus", "b": "17:14", "e": "17:16", "v": 3 }
+            },
+            "haft": { "k": "Judges", "b": "4:4", "e": "5:31", "v": 52 },
+            "haftara": "Judges 4:4-5:31",
+            "seph": { "k": "Judges", "b": "5:1", "e": "5:31", "v": 31 },
+            "sephardic": "Judges 5:1-31",
+            "sephardicNumV": 31
+        }
+        ]
+        service = list(readings.getReadings(data))[0]
+        assert service.name == "Beshalach"
+        assert service.getHebrewYear() == 5783
+        assert service.besorahReading == "Mark 2:1-12"
+
+    def test_can_parse_hebrew_year(self, hebCalData):
+        services = readings.getReadings(hebCalData)
+        for service in services:
+            assert service.getHebrewYear() >= 5782
 
     def test_can_get_services(self, hebCalData):
         services = list(readings.getReadings(hebCalData))

@@ -19,6 +19,10 @@ function enableReadButton(button) {
         let button = $(this);
         let parent = button.parents(".copyable");
         var text = parent.text().trim();
+        if (text.includes(",")) {
+            text = text.split(",")[0];
+        }
+
         let url = button.hasClass('besorah')
             ? `https://www.biblegateway.com/passage/?search=${text}&version=TLV`
             : `https://www.sefaria.org/${text}?lang=bi&aliyot=0`;

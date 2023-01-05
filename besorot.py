@@ -61,7 +61,6 @@ parshiot = {
     "Nitzavim-Vayeilech": singleReadingToFn("Matthew 28:16-20"),
     "Ha'Azinu": singleReadingToFn("Romans 15:7-13"),
     # "Vezot Haberakhah": readingsToFn(("", "", "")),
-    # TODO holidays
     "Pesach I": singleReadingToFn("1 Corinthians 11:23-26"),
     "Pesach VII": singleReadingToFn("1 Corinthians 10:1-11"),
     "Pesach Shabbat Chol ha-Moed": singleReadingToFn("Revelation 5:1-14"),
@@ -76,7 +75,6 @@ parshiot = {
     "Shabbat Parah": singleReadingToFn("Hebrews 9:11-14"),
     "Shabbat HaChodesh": singleReadingToFn("1 Corinthians 5:6-8"),
     "Shabbat HaGadol": singleReadingToFn("Luke 1:5-22"),
-    # "": singleReadingToFn(""),
 }
 
 def getReadings(parasha, hebrewYear, date, description = None):
