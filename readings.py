@@ -7,8 +7,9 @@ import besorot
 
 class Service:
     hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>[\w']*) (?P<year>\d{4})$")
-    holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana")
+    holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana|Shavuot")
     cholHaMoedPattern = re.compile(r"Chol ha-Moed")
+    roshChodeshPattern = re.compile(r"Rosh Chodesh")
 
     def fromDict(self, d):
         self.date = datetime.datetime.strptime(d["date"], "%Y-%m-%d").date()
@@ -33,6 +34,7 @@ class Service:
 
             if self.isShabbat:
                 self.torahReading = allTorahReadings[f"{aliyahForThisYear}"]
+                self.fullTorahReading = d["summary"].split(";")[0].strip()
 
             if self.isHoliday:
                 # holidays don't typically have 7 aliyot, so just show the whole reading from the summaryParts property
@@ -64,6 +66,9 @@ class Service:
     def isCholHaMoed(self):
         return bool(self.cholHaMoedPattern.search(self.name))
 
+    def isRoshChodesh(self):
+        return (self.name and bool(self.roshChodeshPattern.search(self.name))) or (self.additionalDescription and bool(self.roshChodeshPattern.search(self.additionalDescription)))
+
     def isHolidayByName(self):
         return bool(self.holidayNamesPattern.search(self.name) and not self.isCholHaMoed())
 
@@ -73,6 +78,21 @@ class Service:
             return 0
         else:
             return int(match.group("year"))
+    
+
+def getShortenedHafarah(service):
+    if service.haftarahReading is None:
+        return None
+
+    if service.isRoshChodesh():
+        return "Isaiah 66:5-24"
+
+    shortenedHaftarahMap = {
+        ("Ki Tavo", "Isaiah 60:1-22"): "Isaiah 60:1-7",
+    }
+    if shortenedHaftarahMap.get((service.name, service.haftarahReading)) is not None:
+        return shortenedHaftarahMap.get((service.name, service.haftarahReading))
+    return service.haftarahReading
 
 def parseDate(dateString):
     if dateString is None:

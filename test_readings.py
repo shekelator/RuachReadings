@@ -109,8 +109,13 @@ class TestReadings:
         assert maftir == "Numbers 7:42-7:47"
 
     def test_includes_maftir_reason(self, hebCalData):
-        services = list(filter(lambda s: s.date == datetime.date(2022, 12, 24), readings.getReadings(hebCalData)))[0]
-        assert services.additionalDescription == "Shabbat Rosh Chodesh Chanukah"
+        service = list(filter(lambda s: s.date == datetime.date(2022, 12, 24), readings.getReadings(hebCalData)))[0]
+        assert service.additionalDescription == "Shabbat Rosh Chodesh Chanukah"
+
+    def test_gets_rosh_chodesh(self, hebCalData):
+        services = [s.date for s in readings.getReadings(hebCalData) if s.isRoshChodesh()]
+        assert datetime.date(2022, 12, 24) in services
+        assert datetime.date(2024, 11, 2) in services
 
     def test_can_get_hebrew_year(self, hebCalData):
         data = [{
@@ -162,6 +167,11 @@ class TestReadings:
     def test_gets_maftir_for_chol_hamoed(self, hebCalData):
         (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2023, 4, 6))
         assert maftir == "Numbers 28:16-28:25"
+
+    def test_gets_shortened_haftarah(self, hebCalData):
+        allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
+        assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2024, 11, 2)]) == "Isaiah 66:5-24"
+        assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2024, 9, 21)]) == "Isaiah 60:1-7"
 
     def test_holidays_have_readings(self, hebCalData):
         holidayDates = [datetime.date(2023, 4, 6)]  # todo add shavuot, sukkot, HH, etc.

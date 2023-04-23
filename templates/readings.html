@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 
-{% macro copyableReading(text, besorah) -%}
+{% macro copyableReading(text, fullReading, besorah) -%}
     <div class="copyable">{{ text }}
         {% if text %}
+            {% if fullReading and fullReading != text %}
+                <br />
+                <small>Full reading: {{ fullReading }}</small>
+            {% endif %}
         <br/>
         <div class="action-buttons">
             <i class="bi bi-box-arrow-in-up-right read-button {% if besorah %}besorah{% endif %}"></i>
@@ -28,7 +32,7 @@
         <th>Haftarah</th>
         <th>Besorah</th>
     </tr>
-    {% for reading in readings %}
+    {% for reading in services %}
     <tr>
         <td>{{ reading.date.strftime("%d %b %Y") }}</td>
         <td>
@@ -37,11 +41,12 @@
             {% if reading.additionalDescription %}
                 <span class="copyable"><small>({{ reading.additionalDescription }})</small></span>
             {% endif %}
+            <br />
         </td>
-        <td>{{ copyableReading(reading.torahReading) }}</td>
-        <td>{{ copyableReading(reading.maftirReading or "") }}</td>
-        <td>{{ copyableReading(reading.haftarahReading) }}</td>
-        <td>{{ copyableReading(reading.besorahReading or "", true) }}</td>
+        <td>{{ copyableReading(reading.torahReading, reading.fullTorahReading) }}</td>
+        <td>{{ copyableReading(reading.maftirReading or "", "") }}</td>
+        <td>{{ copyableReading(get_shortened_haftarah(reading), reading.haftarahReading) }}</td>
+        <td>{{ copyableReading(reading.besorahReading or "", "", true) }}</td>
     </tr>
     {% endfor %}
 

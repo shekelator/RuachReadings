@@ -12,7 +12,7 @@ def index():
     rawReadingsData = readings.getRawReadingsData(start_date)
     services = list(readings.getReadings(rawReadingsData))
     last_date = services[-1].date
-    return render_template('readings.html', readings=services, last_date=last_date)
+    return render_template('readings.html', services=services, last_date=last_date, get_shortened_haftarah=readings.getShortenedHafarah)
 
 @app.route('/about/')
 def about():
