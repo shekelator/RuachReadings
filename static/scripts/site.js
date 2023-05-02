@@ -1,6 +1,6 @@
 function enableCopyButton(button) {
     button.click(function() {
-        let parent = button.parents(".copyable");
+        let parent = button.parents(".copyable").find(".passage");
         var text = parent.text().trim();
         var copyInput = $("<input id='copyInput' type='text' value='" + text + "'/>");
         $("body").append(copyInput);
@@ -18,7 +18,7 @@ function enableReadButton(button) {
     button.click(function() {
         let button = $(this);
         let parent = button.parents(".copyable");
-        var text = parent.text().trim();
+        var text = parent.find(".passage").text().trim();
         if (text.includes(",")) {
             text = text.split(",")[0];
         }

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% macro copyableReading(text, fullReading, besorah) -%}
-    <div class="copyable">{{ text }}
+    <div class="copyable"><span class="passage">{{ text }}</span>
         {% if text %}
             {% if fullReading and fullReading != text %}
                 <br />
