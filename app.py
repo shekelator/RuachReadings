@@ -16,15 +16,15 @@ def index():
     last_date = services[-1].date
     return render_template('readings.html', services=services, last_date=last_date, get_shortened_haftarah=readings.getShortenedHafarah)
 
-@app.route('/about/')
+@app.route('/about')
 def about():
     return render_template('about.html')
 
-@app.route('/health/')
+@app.route('/health')
 def health():
     return {
         "status": "OK"
     }
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
