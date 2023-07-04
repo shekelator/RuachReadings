@@ -5,9 +5,11 @@ import readings
 
 app = Flask(__name__)
 
+app.logger.setLevel('INFO')
 
 @app.route('/')
 def index():
+    app.logger.info('Request for index')
     start_date = request.args.get('start_date')
     rawReadingsData = readings.getRawReadingsData(start_date)
     services = list(readings.getReadings(rawReadingsData))
@@ -17,6 +19,12 @@ def index():
 @app.route('/about/')
 def about():
     return render_template('about.html')
+
+@app.route('/health/')
+def health():
+    return {
+        "status": "OK"
+    }
 
 if __name__ == '__main__':
     app.run(debug=True)
