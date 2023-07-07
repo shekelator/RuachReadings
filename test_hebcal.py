@@ -1,6 +1,4 @@
-import pytest
 import json
-import datetime
 import requests_mock
 import hebcal
 
