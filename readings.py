@@ -1,6 +1,4 @@
 import datetime
-import requests
-import json
 import re
 import besorot
 
@@ -95,22 +93,6 @@ def getShortenedHafarah(service):
     if shortenedHaftarahMap.get((service.name, service.haftarahReading)) is not None:
         return shortenedHaftarahMap.get((service.name, service.haftarahReading))
     return service.haftarahReading
-
-def parseDate(dateString):
-    if dateString is None:
-        return datetime.datetime.now().date()
-    try:
-        return datetime.datetime.strptime(dateString, "%Y-%m-%d").date()
-    except ValueError:
-        return datetime.datetime.now().date()
-
-def getRawReadingsData(startDate = None):
-    date = parseDate(startDate)
-    endDate = date + datetime.timedelta(days=180)
-    url = f"https://www.hebcal.com/leyning?cfg=json&triennial=off&start={date.strftime('%Y-%m-%d')}&end={endDate.strftime('%Y-%m-%d')}"
-    data = requests.get(url)
-    rawDict = json.loads(data.text)
-    return rawDict["items"]
 
 def getReadings(rawItems):
     shabbatServices = filter(lambda s: s.isShabbat or s.isHoliday, map(lambda i: Service().fromDict(i), rawItems))
