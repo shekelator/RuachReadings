@@ -6,6 +6,10 @@ def singleReadingToFn(reading):
 
 parshiot = {
     "Bereshit": lambda _: "John 1:1-18",
+    "Noach": readingsToFn(("Matthew 1:1-17", "Luke 1:26-38", "John 1:19-34")),
+    "Vayera": readingsToFn(("Matthew 2:1-12", "Luke 2:21-40", " John 2:1-12")),
+    "Chayei Sara": readingsToFn(("Matthew 3:1-12", "Luke 3:1-17", "John 2:13-25")),
+    "Toldot": readingsToFn(("Matthew 3:13-4:11", "Luke 3:18-38", "John 3:1-21")),
     "Lech-Lecha": readingsToFn(("Matthew 1:18-25", "Luke 2:1-20", "John 1:35-51")),
     "Vayetzei": readingsToFn(("Mark 1:14-28", "Luke 4:1-15", "John 4:5-30")),
     "Vayishlach": readingsToFn(("Mark 1:29-45", "Luke 4:16-30", "John 4:31-42")),
