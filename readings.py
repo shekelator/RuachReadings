@@ -4,8 +4,10 @@ import besorot
 
 
 class Service:
-    hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>[\w']*) (?P<year>\d{4})$")
-    holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana|Shavuot|Yom Kippur")
+    hdatePattern = re.compile(
+        r"^(?P<day>\d*) (?P<month>[\w']*) (?P<year>\d{4})$")
+    holidayNamesPattern = re.compile(
+        r"Sukkot|Pesach|Rosh Hashana|Shavuot|Yom Kippur|Shmini Atzeret")
     cholHaMoedPattern = re.compile(r"Chol ha-Moed")
     minchaPattern = re.compile(r"\(Mincha\)")
     roshChodeshPattern = re.compile(r"Rosh Chodesh")
@@ -26,11 +28,13 @@ class Service:
 
         if "fullkriyah" in d:
             fullkriyah = d["fullkriyah"]
-            allTorahReadings = {k: self.convertReading(v) for k, v in fullkriyah.items()}
+            allTorahReadings = {k: self.convertReading(
+                v) for k, v in fullkriyah.items()}
             maftir = None
             self.isHoliday = bool("M" in fullkriyah and self.isHolidayByName())
-        
-            aliyahForThisYear = ((self.getHebrewYear() - 5781) % 7) + 1  # tell us which year of 7-year reading cycle we are in
+
+            # tell us which year of 7-year reading cycle we are in
+            aliyahForThisYear = ((self.getHebrewYear() - 5781) % 7) + 1
 
             if self.isShabbat:
                 self.torahReading = allTorahReadings[f"{aliyahForThisYear}"]
@@ -39,7 +43,8 @@ class Service:
             if self.isHoliday:
                 # holidays don't typically have 7 aliyot, so just show the whole reading from the summaryParts property
                 if "summaryParts" in d:
-                    self.torahReading = self.convertReading(d["summaryParts"][0]).split(";")[0]
+                    self.torahReading = self.convertReading(
+                        d["summaryParts"][0]).split(";")[0]
 
             self.haftarahReading = d["haftara"] if "haftara" in d else None
 
@@ -53,7 +58,8 @@ class Service:
                 elif "M" in d["reason"]:
                     self.additionalDescription = d["reason"]["M"]
 
-            self.besorahReading = besorot.getReadings(self.name, self.getHebrewYear(), self.date, self.additionalDescription)
+            self.besorahReading = besorot.getReadings(
+                self.name, self.getHebrewYear(), self.date, self.additionalDescription)
 
         return self
 
@@ -72,13 +78,13 @@ class Service:
     def isHolidayByName(self):
         return bool(self.holidayNamesPattern.search(self.name) and not self.isCholHaMoed())
 
-    def getHebrewYear(self): 
+    def getHebrewYear(self):
         match = self.hdatePattern.match(self.hebrewDate)
         if match is None:
             return 0
         else:
             return int(match.group("year"))
-    
+
 
 def getShortenedHafarah(service):
     if service.haftarahReading is None:
@@ -96,10 +102,13 @@ def getShortenedHafarah(service):
         return shortenedHaftarahMap.get((service.name, service.haftarahReading))
     return service.haftarahReading
 
+
 def getReadings(rawItems):
-    shabbatServices = filter(lambda s: (s.isShabbat or s.isHoliday) and (not s.isMincha), map(lambda i: Service().fromDict(i), rawItems))
-    
+    shabbatServices = filter(lambda s: (s.isShabbat or s.isHoliday) and (
+        not s.isMincha), map(lambda i: Service().fromDict(i), rawItems))
+
     return shabbatServices
+
 
 def getReadingsForDate(rawItems, date):
     services = list(getReadings(rawItems))
@@ -109,7 +118,7 @@ def getReadingsForDate(rawItems, date):
     else:
         service = servicesOnDate[0]
         return (service.torahReading, service.haftarahReading, service.maftirReading)
-    
+
 
 if __name__ == "__main__":
     import sys

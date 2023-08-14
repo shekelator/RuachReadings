@@ -70,7 +70,7 @@ parshiot = {
     "Pesach Shabbat Chol ha-Moed": singleReadingToFn("Revelation 5:1-14"),
     "Shavuot I": singleReadingToFn("Acts 2:1-21"),
     "Shavuot II": singleReadingToFn("John 15:26-27; 16:12-15"),
-    "Shemini Atzeret": singleReadingToFn("Romans 11:25-36"),
+    "Shmini Atzeret": singleReadingToFn("Romans 11:25-36"),
     "Shabbat Shekalim": singleReadingToFn("Mark 12:41-44"),
     "Rosh Hashana I": singleReadingToFn("Romans 8:31-39"),
     "Rosh Hashana II": singleReadingToFn("1 Thessalonians 4:13-18"),

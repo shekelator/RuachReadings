@@ -51,5 +51,5 @@ class TestBesorot:
         assert getReadings("Shavuot II", 5784, datetime.date(2024, 6, 13)) == "John 15:26-27; 16:12-15"
         assert getReadings("Shavuot I", 5785, datetime.date(2025, 6, 12)) == "Acts 2:1-21"
         assert getReadings("Shavuot I", 5786, datetime.date(2026, 5, 22)) == "Acts 2:1-21"
-        assert getReadings("Shemini Atzeret", 5785, datetime.date(2024, 10, 24)) == "Romans 11:25-36"
+        assert getReadings("Shmini Atzeret", 5785, datetime.date(2024, 10, 24)) == "Romans 11:25-36"
         assert getReadings("Yom Kippur", 5785, datetime.date(2024, 10, 24)) == "Hebrews 9:1-14"
