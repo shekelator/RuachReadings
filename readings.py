@@ -5,8 +5,9 @@ import besorot
 
 class Service:
     hdatePattern = re.compile(r"^(?P<day>\d*) (?P<month>[\w']*) (?P<year>\d{4})$")
-    holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana|Shavuot")
+    holidayNamesPattern = re.compile(r"Sukkot|Pesach|Rosh Hashana|Shavuot|Yom Kippur")
     cholHaMoedPattern = re.compile(r"Chol ha-Moed")
+    minchaPattern = re.compile(r"\(Mincha\)")
     roshChodeshPattern = re.compile(r"Rosh Chodesh")
 
     def fromDict(self, d):
@@ -21,6 +22,7 @@ class Service:
         self.additionalDescription = None
         self.besorahReading = None
         self.isHoliday = False
+        self.isMincha = bool(self.minchaPattern.search(self.name))
 
         if "fullkriyah" in d:
             fullkriyah = d["fullkriyah"]
@@ -95,7 +97,7 @@ def getShortenedHafarah(service):
     return service.haftarahReading
 
 def getReadings(rawItems):
-    shabbatServices = filter(lambda s: s.isShabbat or s.isHoliday, map(lambda i: Service().fromDict(i), rawItems))
+    shabbatServices = filter(lambda s: (s.isShabbat or s.isHoliday) and (not s.isMincha), map(lambda i: Service().fromDict(i), rawItems))
     
     return shabbatServices
 

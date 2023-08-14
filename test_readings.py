@@ -155,7 +155,7 @@ class TestReadings:
         assert haftarah == "Ezekiel 38:18-39:16"
 
     def test_marks_holidays_correctly(self, hebCalData):
-        holidayDates = [datetime.date(2023, 4, 6), datetime.date(2023, 4, 7)]
+        holidayDates = [datetime.date(2023, 4, 6), datetime.date(2023, 4, 7), datetime.date(2024, 10, 12)]
         allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
         for date in holidayDates:
             assert allServicesByDate[date].isHoliday == True
