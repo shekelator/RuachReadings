@@ -76,6 +76,7 @@ parshiot = {
     "Shabbat Shuva": singleReadingToFn("Luke 15:11-32"),
     "Yom Kippur": singleReadingToFn("Hebrews 9:1-14"),
     "Sukkot I": singleReadingToFn("Revelation 7:9-17"),
+    "Sukkot Shabbat Chol ha-Moed": singleReadingToFn("John 7:2-24"),
     "Shmini Atzeret": singleReadingToFn("Romans 11:25-36"),
     "Shabbat Zachor": singleReadingToFn("Revelation 6:9-7:8"),
     "Shabbat Parah": singleReadingToFn("Hebrews 9:11-14"),
