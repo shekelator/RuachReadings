@@ -37,7 +37,9 @@
         <td>{{ reading.date.strftime("%d %b %Y") }}</td>
         <td>
             <span class="copyable">{{ reading.name }}</span><br/>
-            <span class="copyable">{{ reading.hebrewName }}</span><br/>
+            {% if reading.hebrewName %}
+                <span class="copyable">{{ reading.hebrewName }}</span><br/>
+            {% endif %}
             {% if reading.additionalDescription %}
                 <span class="copyable"><small>({{ reading.additionalDescription }})</small></span>
             {% endif %}

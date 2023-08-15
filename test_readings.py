@@ -174,13 +174,14 @@ class TestReadings:
         assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2024, 9, 21)]) == "Isaiah 60:1-7"
 
     def test_holidays_have_readings(self, hebCalData):
-        holidayDates = [datetime.date(2023, 4, 6)]  # todo add shavuot, sukkot, HH, etc.
+        holidayDates = [datetime.date(2023, 4, 6), datetime.date(2024, 10, 24)]  # todo add shavuot, sukkot, HH, etc.
         allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
         for date in holidayDates:
             assert allServicesByDate[date].torahReading != None
             assert allServicesByDate[date].haftarahReading != None
             assert allServicesByDate[date].maftirReading != None
             assert allServicesByDate[date].besorahReading != None
+            assert allServicesByDate[date].hebrewName != None
 
     def test_gets_holiday_besorah_for_holidays(self, hebCalData):
         holidayDates = [
