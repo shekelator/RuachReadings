@@ -33,7 +33,7 @@ class Service:
             self.isHoliday = bool("M" in fullkriyah and self.isHolidayByName())
 
             if self.isShabbat:
-                self.torahReading = allTorahReadings[getAliyahForYear(self.getHebrewYear(), self.name)]
+                self.torahReading = allTorahReadings[getAliyahForYear(self.getHebrewYear(), self.name, self.hebrewDate)]
                 self.fullTorahReading = d["summary"].split(";")[0].strip()
 
             if self.isHoliday:
@@ -83,14 +83,14 @@ class Service:
 
 
 # tell us which year of 7-year reading cycle we are in. 
-def getAliyahForYear(year, parasha):
+def getAliyahForYear(year, parasha, hebrewDate):
     aliyahForThisYear = ((year - 5781) % 7) + 1
 
     # When the year turns over on Tishrei 1 (RH), we don't change the aliyah until after Simchat Torah
-    if parasha.lower() in ["ha'azinu", "v'zot haberakhah", "vayeilech", "nitzavim-vayeilech"]:
-        return f"{aliyahForThisYear - 1}"
-    else:
-        return f"{aliyahForThisYear}"
+    if parasha.lower() in ["ha'azinu", "v'zot haberakhah", "vayeilech", "nitzavim-vayeilech"] and "Tishrei" in hebrewDate:
+        aliyahForThisYear -= 1
+
+    return f"{aliyahForThisYear}"
 
 def getShortenedHafarah(service):
     if service.haftarahReading is None:

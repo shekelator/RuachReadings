@@ -96,8 +96,8 @@ class TestReadings:
 
     def test_gets_proper_reading_before_simchat_torah(self, hebCalData):
         services = list(readings.getReadings(hebCalData))
-        (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2024, 10, 5))
-        assert torah == "Deuteronomy 32:19-32:28"
+        (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2023, 9, 23))
+        assert torah == "Deuteronomy 32:13-32:18"
         assert maftir == None
 
 
