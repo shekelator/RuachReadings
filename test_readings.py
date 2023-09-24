@@ -94,6 +94,11 @@ class TestReadings:
         assert service.torahReading == "Genesis 21:1-21:34"
         assert service.maftirReading == "Numbers 29:1-29:6"
 
+    def test_gets_proper_reading_before_simchat_torah(self, hebCalData):
+        services = list(readings.getReadings(hebCalData))
+        (torah, haftarah, maftir) = readings.getReadingsForDate(hebCalData, datetime.date(2024, 10, 5))
+        assert torah == "Deuteronomy 32:19-32:28"
+        assert maftir == None
 
 
     def test_can_get_torah_and_haft_for_date(self, hebCalData):

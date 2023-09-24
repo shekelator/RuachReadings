@@ -28,23 +28,18 @@ class Service:
 
         if "fullkriyah" in d:
             fullkriyah = d["fullkriyah"]
-            allTorahReadings = {k: self.convertReading(
-                v) for k, v in fullkriyah.items()}
+            allTorahReadings = {k: self.convertReading(v) for k, v in fullkriyah.items()}
             maftir = None
             self.isHoliday = bool("M" in fullkriyah and self.isHolidayByName())
 
-            # tell us which year of 7-year reading cycle we are in
-            aliyahForThisYear = ((self.getHebrewYear() - 5781) % 7) + 1
-
             if self.isShabbat:
-                self.torahReading = allTorahReadings[f"{aliyahForThisYear}"]
+                self.torahReading = allTorahReadings[getAliyahForYear(self.getHebrewYear(), self.name)]
                 self.fullTorahReading = d["summary"].split(";")[0].strip()
 
             if self.isHoliday:
                 # holidays don't typically have 7 aliyot, so just show the whole reading from the summaryParts property
                 if "summaryParts" in d:
-                    self.torahReading = self.convertReading(
-                        d["summaryParts"][0]).split(";")[0]
+                    self.torahReading = self.convertReading(d["summaryParts"][0]).split(";")[0]
 
             self.haftarahReading = d["haftara"] if "haftara" in d else None
 
@@ -86,6 +81,17 @@ class Service:
             return int(match.group("year"))
 
 
+
+# tell us which year of 7-year reading cycle we are in. 
+def getAliyahForYear(year, parasha):
+    aliyahForThisYear = ((year - 5781) % 7) + 1
+
+    # When the year turns over on Tishrei 1 (RH), we don't change the aliyah until after Simchat Torah
+    if parasha.lower() in ["ha'azinu", "v'zot haberakhah", "vayeilech", "nitzavim-vayeilech"]:
+        return f"{aliyahForThisYear - 1}"
+    else:
+        return f"{aliyahForThisYear}"
+
 def getShortenedHafarah(service):
     if service.haftarahReading is None:
         return None
@@ -109,7 +115,6 @@ def getReadings(rawItems):
         not s.isMincha), map(lambda i: Service().fromDict(i), rawItems))
 
     return shabbatServices
-
 
 def getReadingsForDate(rawItems, date):
     services = list(getReadings(rawItems))
