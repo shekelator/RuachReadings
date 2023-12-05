@@ -70,6 +70,9 @@ class Service:
     def isRoshChodesh(self):
         return (self.name and bool(self.roshChodeshPattern.search(self.name))) or (self.additionalDescription and bool(self.roshChodeshPattern.search(self.additionalDescription)))
 
+    def isShabbatChanukah(self):
+        return self.additionalDescription and "on Shabbat" in self.additionalDescription and "Chanukah" in self.additionalDescription
+
     def isHolidayByName(self):
         return bool(self.holidayNamesPattern.search(self.name) and not self.isCholHaMoed())
 
@@ -95,6 +98,9 @@ def getAliyahForYear(year, parasha, hebrewDate):
 def getShortenedHafarah(service):
     if service.haftarahReading is None:
         return None
+
+    if service.isShabbatChanukah():
+        return "Zechariah 2:14-3:10"
 
     if service.isRoshChodesh():
         return "Isaiah 66:5-24"

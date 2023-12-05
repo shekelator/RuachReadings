@@ -177,6 +177,7 @@ class TestReadings:
         allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }
         assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2024, 11, 2)]) == "Isaiah 66:5-24"
         assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2024, 9, 21)]) == "Isaiah 60:1-7"
+        assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2023, 12, 9)]) == "Zechariah 2:14-3:10"
 
     def test_holidays_have_readings(self, hebCalData):
         holidayDates = [datetime.date(2023, 4, 6), datetime.date(2024, 10, 24)]  # todo add shavuot, sukkot, HH, etc.
