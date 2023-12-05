@@ -204,6 +204,7 @@ class TestReadings:
             (datetime.date(2025, 4, 12), "Luke 1:5-22"),  # Shabbat HaGadol
             (datetime.date(2025, 4, 13), "1 Corinthians 11:23-26"),  # Pesach I
             (datetime.date(2025, 4, 19), "1 Corinthians 10:1-11"),  # Pesach VII
+            (datetime.date(2023, 12, 9), "John 10:22-42"),  # Shabbat chanukah
 
             # TODO might need a test for two Shabbat chol ha-moeds during pesach
 

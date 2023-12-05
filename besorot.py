@@ -88,6 +88,9 @@ def getReadings(parasha, hebrewYear, date, description = None):
     parasha = parasha.replace(" (on Shabbat)", "")
     besorahYear = getYear(hebrewYear)
 
+    if isShabbatChanukah(description):
+        return singleReadingToFn("John 10:22-42")(besorahYear)
+    
     if isLastShabbatBeforeChristmas(date):
         return readingsToFn(("Philippians 2:5-11", "Colossians 1:15-20", "1 John 1:1-4"))(besorahYear)
 
@@ -105,6 +108,9 @@ def getReadings(parasha, hebrewYear, date, description = None):
 
 def isLastShabbatBeforeChristmas(date):
     return date.month == 12 and date.day <= 25 and date.day >= 19
+
+def isShabbatChanukah(description):
+    return description and "on Shabbat" in description and "Chanukah" in description
 
 # TODO this needs to be more robust
 def matotMaseiAreSeparate(hebrewYear):

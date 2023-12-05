@@ -54,3 +54,4 @@ class TestBesorot:
         assert getReadings("Shmini Atzeret", 5785, datetime.date(2024, 10, 24)) == "Romans 11:25-36"
         assert getReadings("Yom Kippur", 5785, datetime.date(2024, 10, 24)) == "Hebrews 9:1-14"
         assert getReadings("Sukkot I", 5785, datetime.date(2024, 10, 17)) == "Revelation 7:9-17"
+        assert getReadings("Vayeishev", 5784, datetime.date(2023, 12, 9), "Chanukah Day 2 (on Shabbat)") == "John 10:22-42"
