@@ -110,6 +110,7 @@ def getShortenedHafarah(service):
         ("Chukat-Balak", "Micah 5:6-6:8"): "Micah 6:1-6:8",
         ("Balak", "Micah 5:6-6:8"): "Micah 6:1-6:8",
         ("Nitzavim-Vayeilech", "Isaiah 61:10-63:9"): "Isaiah 61:10-62:12",
+        ("Beshalach", "Judges 4:4-5:31"): "Judges 5:1-5:31",  # TODO alternate between Juddges 4 and 5
     }
     if shortenedHaftarahMap.get((service.name, service.haftarahReading)) is not None:
         return shortenedHaftarahMap.get((service.name, service.haftarahReading))
