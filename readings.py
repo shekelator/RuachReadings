@@ -5,7 +5,7 @@ import besorot
 
 class Service:
     hdatePattern = re.compile(
-        r"^(?P<day>\d*) (?P<month>[\w']*) (?P<year>\d{4})$")
+        r"^(?P<day>\d*) (?P<month>[\w']* ?(I|II)?) (?P<year>\d{4})$")
     holidayNamesPattern = re.compile(
         r"Sukkot|Pesach|Rosh Hashana|Shavuot|Yom Kippur|Shmini Atzeret")
     cholHaMoedPattern = re.compile(r"Chol ha-Moed")

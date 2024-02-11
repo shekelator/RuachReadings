@@ -8917,6 +8917,93 @@
         },
 
         {
+            "date": "2024-02-10",
+            "hdate": "1 Adar I 5784",
+            "name": {
+                "en": "Mishpatim",
+                "he": "מִּשְׁפָּטִים"
+            },
+            "parshaNum": 18,
+            "summary": "Exodus 21:1-24:18; Numbers 28:9-15",
+            "fullkriyah": {
+                "1": {
+                    "k": "Exodus",
+                    "b": "21:1",
+                    "e": "21:19",
+                    "v": 19
+                },
+                "2": {
+                    "k": "Exodus",
+                    "b": "21:20",
+                    "e": "22:3",
+                    "v": 21
+                },
+                "3": {
+                    "k": "Exodus",
+                    "b": "22:4",
+                    "e": "22:26",
+                    "v": 23
+                },
+                "4": {
+                    "k": "Exodus",
+                    "b": "22:27",
+                    "e": "23:5",
+                    "v": 9
+                },
+                "5": {
+                    "k": "Exodus",
+                    "b": "23:6",
+                    "e": "23:19",
+                    "v": 14
+                },
+                "6": {
+                    "k": "Exodus",
+                    "b": "23:20",
+                    "e": "23:25",
+                    "v": 6
+                },
+                "7": {
+                    "k": "Exodus",
+                    "b": "23:26",
+                    "e": "24:18",
+                    "v": 26
+                },
+                "M": {
+                    "p": 41,
+                    "k": "Numbers",
+                    "b": "28:9",
+                    "e": "28:15",
+                    "v": 7,
+                    "reason": "Shabbat Rosh Chodesh"
+                }
+            },
+            "haft": {
+                "k": "Isaiah",
+                "b": "66:1",
+                "e": "66:24",
+                "v": 24,
+                "reason": "Shabbat Rosh Chodesh"
+            },
+            "haftara": "Isaiah 66:1-24",
+            "summaryParts": [
+                {
+                    "k": "Exodus",
+                    "b": "21:1",
+                    "e": "24:18"
+                },
+                {
+                    "k": "Numbers",
+                    "b": "28:9",
+                    "e": "28:15"
+                }
+            ],
+            "reason": {
+                "haftara": "Shabbat Rosh Chodesh",
+                "M": "Shabbat Rosh Chodesh"
+            }
+        },
+
+        {
             "date": "2024-08-01",
             "hdate": "26 Tamuz 5784",
             "name": {
