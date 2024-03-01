@@ -106,11 +106,12 @@ def getShortenedHafarah(service):
         return "Isaiah 66:5-24"
 
     shortenedHaftarahMap = {
-        ("Ki Tavo", "Isaiah 60:1-22"): "Isaiah 60:1-7",
+        ("Beshalach", "Judges 4:4-5:31"): "Judges 5:1-5:31",  # TODO alternate between Juddges 4 and 5
+        ("Ki Tisa", "I Kings 18:1-39"): "I Kings 18:20-39",
         ("Chukat-Balak", "Micah 5:6-6:8"): "Micah 6:1-6:8",
         ("Balak", "Micah 5:6-6:8"): "Micah 6:1-6:8",
+        ("Ki Tavo", "Isaiah 60:1-22"): "Isaiah 60:1-7",
         ("Nitzavim-Vayeilech", "Isaiah 61:10-63:9"): "Isaiah 61:10-62:12",
-        ("Beshalach", "Judges 4:4-5:31"): "Judges 5:1-5:31",  # TODO alternate between Juddges 4 and 5
     }
     if shortenedHaftarahMap.get((service.name, service.haftarahReading)) is not None:
         return shortenedHaftarahMap.get((service.name, service.haftarahReading))
