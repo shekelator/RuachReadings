@@ -98,7 +98,7 @@ jobs:
           # could use ${{ env.IMAGE_NAME }}, but needs to be lowercase
           image:  ruachreadings
           registry: ${{ env.ECR_REPOSITORY }}
-          pushImage: ${{ github.event_name != 'pull_request' }}
+          # pushImage: ${{ github.event_name != 'pull_request' }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
