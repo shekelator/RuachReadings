@@ -19,7 +19,7 @@ env:
   # github.repository as <account>/<repo>
   IMAGE_NAME: ${{ github.repository }}
   AWS_REGION: us-east-1
-  ECR_REPOSITORY: 261024489445.dkr.ecr.us-east-1.amazonaws.com/dnix.us/ruachreadings
+  ECR_REPOSITORY: 261024489445.dkr.ecr.us-east-1.amazonaws.com/dnix.us
 
 
 jobs:
