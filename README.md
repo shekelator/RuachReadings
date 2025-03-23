@@ -17,3 +17,8 @@ docker run -d -p 5000:5000 --log-driver=awslogs --log-opt awslogs-region=us-east
 * Reduce logging level
 * Set up CD to deploy automatically to new infra
 * Shut down old infra
+* Consider adding links to reading assistance:
+    * [Tikkun here](https://swfs.org/learning/bar-bat-mitzvah/traditional-aged-bnah-mitzvah/centennial-torah-scroll/)
+    * Or [Scrollscraper](https://scrollscraper.adatshalom.net/)
+    * Or [here](https://www.evangel.edu/torah/)
+    
