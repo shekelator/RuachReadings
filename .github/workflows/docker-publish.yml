@@ -95,7 +95,8 @@ jobs:
       # https://docs.github.com/en/actions/use-cases-and-examples/deploying/deploying-to-amazon-elastic-container-service
       - uses: mr-smithers-excellent/docker-build-push@v6
         with:
-          image: ${{ env.IMAGE_NAME }}
+          # could use ${{ env.IMAGE_NAME }}, but needs to be lowercase
+          image:  ruachreadings
           registry: ${{ env.ECR_REPOSITORY }}
           pushImage: ${{ github.event_name != 'pull_request' }}
         env:
