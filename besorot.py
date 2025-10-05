@@ -63,7 +63,7 @@ parshiot = {
     "Ki Tavo": singleReadingToFn("1 Cor. 15:1-11"),
     "Nitzavim": singleReadingToFn("Matthew 28:16-20"),
     "Nitzavim-Vayeilech": singleReadingToFn("Matthew 28:16-20"),
-    "Ha'Azinu": singleReadingToFn("Romans 15:7-13"),
+    "Ha'azinu": singleReadingToFn("Romans 15:7-13"),
     # "Vezot Haberakhah": readingsToFn(("", "", "")),
     "Pesach I": singleReadingToFn("1 Corinthians 11:23-26"),
     "Pesach VII": singleReadingToFn("1 Corinthians 10:1-11"),
