@@ -87,11 +87,12 @@ class Service:
 
 # tell us which year of 7-year reading cycle we are in. 
 def getAliyahForYear(year, parasha, hebrewDate):
+    if parasha.lower() in ["ha'azinu", "v'zot haberakhah", "vayeilech", "nitzavim-vayeilech"] and "Tishrei" in hebrewDate:
+        year -= 1
+
     aliyahForThisYear = ((year - 5781) % 7) + 1
 
     # When the year turns over on Tishrei 1 (RH), we don't change the aliyah until after Simchat Torah
-    if parasha.lower() in ["ha'azinu", "v'zot haberakhah", "vayeilech", "nitzavim-vayeilech"] and "Tishrei" in hebrewDate:
-        aliyahForThisYear -= 1
 
     return f"{aliyahForThisYear}"
 
