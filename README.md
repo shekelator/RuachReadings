@@ -5,10 +5,13 @@ To run:
 ```
 docker build --tag ruach-readings .
 
-# local
+# local (docker)
 docker run -p 5000:8080 ruach-readings:latest
 
-# in AWS
+# local (development) - run the FastAPI dev server with auto-reload
+python -m uvicorn app_fastapi:app --reload --host 0.0.0.0 --port 8080
+
+# production (example) using Gunicorn + Uvicorn workers
 docker run -d -p 5000:5000 --log-driver=awslogs --log-opt awslogs-region=us-east-1 --log-opt awslogs-group=/ruachreadings ghcr.io/shekelator/ruachreadings:main
 ```
 

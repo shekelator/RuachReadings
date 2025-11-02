@@ -54,7 +54,7 @@
 
     </table>
     <div class="row justify-content-end">
-        <a href="{{ url_for('index') }}?start_date={{ last_date }}">Next →</a>
+        <a href="{{ request.url_for('index') }}?start_date={{ last_date }}">Next →</a>
     </div>
 
 </div>
