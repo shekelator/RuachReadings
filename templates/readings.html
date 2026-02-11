@@ -10,6 +10,9 @@
         <br/>
         <div class="action-buttons">
             <i class="bi bi-box-arrow-in-up-right read-button {% if besorah %}besorah{% endif %}"></i>
+            {% if besorah %}
+                <i class="bi bi-journal-text delitzsch-button"></i>
+            {% endif %}
             <i class="bi bi-clipboard copy-button"></i>
         </div>
         {% endif %}
