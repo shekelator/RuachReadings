@@ -30,15 +30,26 @@ function enableReadButton(button) {
     });
 }
 
+function enableDelitzschButton(button) {
+    button.click(function() {
+        let parent = $(this).parents(".copyable");
+        var text = parent.find(".passage").text().trim();
+        let url = `https://delitzsch.luchot.org/texts/${encodeURI(text)}`;
+        window.open(url, "_blank");
+    });
+}
+
 
 $(".readings td").hover(function(evt) {
     let el = $(this);
     el.find(".action-buttons").show();
     enableCopyButton(el.find(".copy-button"));
     enableReadButton(el.find(".read-button"));
+    enableDelitzschButton(el.find(".delitzsch-button"));
 }, function(evt) {
     let el = $(this);
     el.find(".copy-button").off("click");
     el.find(".read-button").off("click");
+    el.find(".delitzsch-button").off("click");
     el.find(".action-buttons").hide();
 });
