@@ -193,7 +193,7 @@ class TestReadings:
                 "M": { "k": "Numbers", "b": "7:54", "e": "8:4", "v": 40 }
             },
             "haft": { "k": "I Kings", "b": "7:40", "e": "7:50", "v": 11 },
-            "haftara": "I Kings 7:40-7:50",
+            "haftara": "I Kings 7:40-50",
             "reason": {
                 "M": "Chanukah Day 8 (on Shabbat)",
                 "haftara": "Chanukah Day 8 (on Shabbat)"
@@ -202,7 +202,7 @@ class TestReadings:
 
         service = list(readings.getReadings(data))[0]
         assert service.isShabbatChanukah() == True
-        assert readings.getShortenedHafarah(service) == "I Kings 7:40-7:50"
+        assert readings.getShortenedHafarah(service) == "I Kings 7:40-50"
 
     def test_holidays_have_readings(self, hebCalData):
         holidayDates = [datetime.date(2023, 4, 6), datetime.date(2024, 10, 24)]  # todo add shavuot, sukkot, HH, etc.
