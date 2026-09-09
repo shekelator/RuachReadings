@@ -41,6 +41,13 @@ docker context ls
 docker context use colima
 ```
 
+### Known Edge Cases
+
+Chanukah can include two Shabbatot in the same Hebrew year (for example, 5787 / 2026).
+
+* First Shabbat Chanukah (Day 1 or Day 2 on Shabbat): use the Chanukah Besorah reading (`John 10:22-42`)
+* Second Shabbat Chanukah (for example Day 8 on Shabbat): use the normal parasha Besorah reading for that year
+
 ### TODO
 * Make sure the pipeline is running the tests
 * Reduce logging level

@@ -56,3 +56,7 @@ class TestBesorot:
         assert getReadings("Yom Kippur", 5785, datetime.date(2024, 10, 24)) == "Hebrews 9:1-14"
         assert getReadings("Sukkot I", 5785, datetime.date(2024, 10, 17)) == "Revelation 7:9-17"
         assert getReadings("Vayeishev", 5784, datetime.date(2023, 12, 9), "Chanukah Day 2 (on Shabbat)") == "John 10:22-42"
+
+    def test_two_shabbat_chanukah_first_gets_special_second_gets_parasha(self, calendarDate):
+        assert getReadings("Vayeshev", 5787, datetime.date(2026, 12, 5), "Chanukah Day 1 (on Shabbat)") == "John 10:22-42"
+        assert getReadings("Miketz", 5787, datetime.date(2026, 12, 12), "Chanukah Day 8 (on Shabbat)") == "Luke 5:1-11"
