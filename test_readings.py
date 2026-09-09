@@ -179,6 +179,31 @@ class TestReadings:
         assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2024, 9, 21)]) == "Isaiah 60:1-7"
         assert readings.getShortenedHafarah(allServicesByDate[datetime.date(2023, 12, 9)]) == "Zechariah 2:14-3:10"
 
+    def test_gets_second_shabbat_chanukah_haftarah(self):
+        data = [{
+            "date": "2026-12-12",
+            "hdate": "2 Tevet 5787",
+            "name": {
+                "en": "Miketz",
+                "he": "מִקֵּץ"
+            },
+            "summary": "Genesis 41:1-44:17; Numbers 7:54-8:4",
+            "fullkriyah": {
+                "7": { "k": "Genesis", "b": "43:27", "e": "44:17", "v": 44 },
+                "M": { "k": "Numbers", "b": "7:54", "e": "8:4", "v": 40 }
+            },
+            "haft": { "k": "I Kings", "b": "7:40", "e": "7:50", "v": 11 },
+            "haftara": "I Kings 7:40-7:50",
+            "reason": {
+                "M": "Chanukah Day 8 (on Shabbat)",
+                "haftara": "Chanukah Day 8 (on Shabbat)"
+            }
+        }]
+
+        service = list(readings.getReadings(data))[0]
+        assert service.isShabbatChanukah() == True
+        assert readings.getShortenedHafarah(service) == "I Kings 7:40-7:50"
+
     def test_holidays_have_readings(self, hebCalData):
         holidayDates = [datetime.date(2023, 4, 6), datetime.date(2024, 10, 24)]  # todo add shavuot, sukkot, HH, etc.
         allServicesByDate = { r.date : r for r in readings.getReadings(hebCalData) }

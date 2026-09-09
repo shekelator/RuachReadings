@@ -101,7 +101,11 @@ def getShortenedHafarah(service):
         return None
 
     if service.isShabbatChanukah():
-        return "Zechariah 2:14-3:10"
+        # Only the Zechariah Chanukah haftarah is shortened; a second Shabbat
+        # in Chanukah uses Kings and should be preserved.
+        if service.haftarahReading.startswith("Zechariah "):
+            return "Zechariah 2:14-3:10"
+        return service.haftarahReading
 
     if service.isRoshChodesh():
         return "Isaiah 66:5-24"
